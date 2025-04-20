@@ -4,6 +4,9 @@ from selenium.webdriver.chrome.options import Options
 import requests
 import logging
 import json
+import shutil
+import subprocess
+import sys
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -48,7 +51,18 @@ def create_query(texts):
     ]
     return messages
 
+def check_ollama():
+    if shutil.which("ollama") is None:
+        logging.error("ollama CLI not found. Install via `brew install ollama`")
+        sys.exit(1)
+    try:
+        subprocess.run(["ollama", "--version"], check=True, stdout=subprocess.DEVNULL)
+    except Exception as e:
+        logging.error(f"Error running ollama: {e}")
+        sys.exit(1)
+
 def main():
+    check_ollama()
     url = "url" 
     website = Website(url)
     query = create_query(website.text)
