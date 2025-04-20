@@ -49,7 +49,7 @@ def create_query(texts):
     return messages
 
 def main():
-    url = "https://www.uber.com/global/ko/careers/list/142855/?uclick_id=e9ec8abb-98c1-4eae-b76c-57a535b1f880"
+    url = "url" 
     website = Website(url)
     query = create_query(website.text)
     # Request non-streaming JSON to avoid chunked output
